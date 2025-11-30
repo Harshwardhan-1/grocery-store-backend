@@ -1,5 +1,3 @@
-
-// index.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -16,6 +14,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static('uploads'));
+
+app.get("/ping",(req,res)=>{
+    res.send("server is awake");
+})
 
 // MongoDB Atlas connection
 mongoose.connect(process.env.MONGO_URL)

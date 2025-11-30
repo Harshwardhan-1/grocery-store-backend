@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_URL)
     .catch(err => console.log(err));
 
 app.use(cors({
-    origin: 'https://grocery-shop-frontend-five.vercel.app', // frontend URL
+      origin: process.env.FRONTEND_URL,
     credentials: true
 }));
 

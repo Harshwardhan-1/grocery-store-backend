@@ -20,8 +20,13 @@ bcrypt.genSalt(10, function(err, salt) {
     phone,
     pincode,
 });
-let token=jwt.sign({gmail,userId:newUser._id},"H@rshyadav0912");
-res.cookie("token",token);
+let token=jwt.sign({gmail,userId:newUser._id},process.env.JWT_SECRET);
+ res.cookie("token", token, {
+                httpOnly: true,               
+                secure: true,                
+                sameSite: "none",            
+                maxAge: 24 * 60 * 60 * 1000  
+            });
 res.status(200).json({
     message:"User created Successfully",
     data:newUser
@@ -46,8 +51,13 @@ bcrypt.compare(password, checkUser.password, function(err, result) {
             message:"user not found",
         });
     }
-    let token=jwt.sign({gmail,userId:checkUser._id},"H@rshyadav0912");
-    res.cookie("token",token);
+    let token=jwt.sign({gmail,userId:checkUser._id}, process.env.JWT_SECRET);
+     res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 24 * 60 * 60 * 1000
+        });
     res.status(200).json({
         message:"login successfull",
         data:checkUser
